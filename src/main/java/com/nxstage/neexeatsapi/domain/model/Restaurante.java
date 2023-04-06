@@ -1,7 +1,9 @@
 package com.nxstage.neexeatsapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
+import com.nxstage.neexeatsapi.core.validation.Groups;
+import com.nxstage.neexeatsapi.core.validation.Multiplo;
+import com.nxstage.neexeatsapi.core.validation.ValorZeroInclueDescricao;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -9,11 +11,17 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@ValorZeroInclueDescricao(valorField =  "taxaFrete"
+        , descricaoField = "nome", descricaoObrigatoria =  "Frete Gratis")
 @Entity
 @Data
 @NoArgsConstructor
@@ -24,13 +32,19 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 
+    @NotNull
+    @PositiveOrZero
     @Column(name = "taxa_frete",nullable = false)
     private BigDecimal taxaFrete;
 
     //@JsonIgnore
+    @Valid
+    @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
+    @NotNull
     @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "kitchen_id",nullable = false)//define o nome na tabela restaurante da foreing Key
     private Kitchen kitchen;

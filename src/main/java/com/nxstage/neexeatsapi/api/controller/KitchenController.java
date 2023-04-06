@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,12 +35,12 @@ public class KitchenController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Kitchen addKitchem(@RequestBody Kitchen kitchen){
+    public Kitchen addKitchem(@RequestBody @Valid Kitchen kitchen){
         return cadastroCozinha.salvar(kitchen);
     }
 
     @PutMapping("/{kitchenId}")
-    public Kitchen updateKitchen(@PathVariable Long kitchenId,  @RequestBody Kitchen kitchen){
+    public Kitchen updateKitchen(@PathVariable Long kitchenId,  @RequestBody @Valid Kitchen kitchen){
         Kitchen updatingKitchen = cadastroCozinha.buscarOuFalhar(kitchenId);
 
         BeanUtils.copyProperties(kitchen, updatingKitchen,"id");

@@ -2,9 +2,8 @@ package com.nxstage.neexeatsapi.api.controller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nxstage.neexeatsapi.core.validation.ValidacaoException;
 import com.nxstage.neexeatsapi.domain.exception.CozinhaNaoEncontradaException;
-import com.nxstage.neexeatsapi.domain.exception.EntidadeEmUsoException;
-import com.nxstage.neexeatsapi.domain.exception.EntidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.NegocioException;
 import com.nxstage.neexeatsapi.domain.model.Restaurante;
 import com.nxstage.neexeatsapi.domain.repository.RestauranteRepository;
@@ -13,19 +12,19 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -35,6 +34,9 @@ public class RestauranteController {
 
     @Autowired
     private CadastroRestauranteService cadastroRestaurante;
+
+    @Autowired
+    private SmartValidator validator;
 
     @GetMapping
     public List<Restaurante> restauranteList(){
@@ -48,7 +50,7 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante restauranteAdd(@RequestBody Restaurante restaurante){
+    public Restaurante restauranteAdd(@RequestBody @Valid Restaurante restaurante){
         try{
             return cadastroRestaurante.salvar(restaurante);
         }catch(CozinhaNaoEncontradaException e){
@@ -58,7 +60,7 @@ public class RestauranteController {
 
     @PutMapping("/{restauranteId}")
     public Restaurante restauranteUpdate(
-            @PathVariable("restauranteId") Long id, @RequestBody Restaurante restaurante) {
+            @PathVariable("restauranteId") Long id, @RequestBody @Valid Restaurante restaurante) {
             Restaurante updatingRestaurante = cadastroRestaurante.buscaOuFalhar(id);
 
             BeanUtils.copyProperties(restaurante, updatingRestaurante, "id", "formasPag","endereco",
@@ -89,7 +91,19 @@ public class RestauranteController {
         Restaurante restauranteAtual = cadastroRestaurante.buscaOuFalhar(id);
 
         merge(campos,restauranteAtual,request);
+
+        validate(restauranteAtual, "restaurante");
+
         return restauranteUpdate(id,restauranteAtual);
+    }
+
+    private void validate(Restaurante restauranteAtual, String objectName) {
+        BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restauranteAtual,objectName);
+        validator.validate(restauranteAtual,bindingResult);
+
+        if (bindingResult.hasErrors()){
+            throw new ValidacaoException(bindingResult);
+        }
     }
 
     private static void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino,

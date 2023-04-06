@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,10 +28,14 @@ public class CidadeController {
     public ResponseEntity<List> cidadeList(){
         return ResponseEntity.ok().body(cidadeRepository.findAll());
     }
+    @GetMapping("/{id}")
+    public Cidade cidadeFind(@PathVariable Long id){
+        return cadastroCidade.buscarOuFalhar(id);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cidade cidadeAdd(@RequestBody Cidade cidade){
+    public Cidade cidadeAdd(@RequestBody @Valid Cidade cidade){
         try{
             return cadastroCidade.salvar(cidade);
         }catch(EstadoNaoEncontradoException e){
@@ -39,7 +44,7 @@ public class CidadeController {
     }
 
     @PutMapping("/{cidadeId}")
-    public Cidade cidadeUpdate(@PathVariable("cidadeId") Long id, @RequestBody Cidade cidade){
+    public Cidade cidadeUpdate(@PathVariable("cidadeId") Long id, @RequestBody @Valid Cidade cidade){
         try{Cidade updatingCidade = cadastroCidade.buscarOuFalhar(id);
             BeanUtils.copyProperties(cidade,updatingCidade,"id");
 
