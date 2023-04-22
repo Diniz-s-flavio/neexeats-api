@@ -2,9 +2,7 @@ package com.nxstage.neexeatsapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nxstage.neexeatsapi.core.validation.Groups;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +14,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Kitchen {
     @Id
     @NotNull(groups = Groups.CozinhaId.class)
@@ -24,6 +23,7 @@ public class Kitchen {
     private Long id;
 
     @NotBlank
+    @NonNull
     @Column(nullable = false)
     private String nome;
 

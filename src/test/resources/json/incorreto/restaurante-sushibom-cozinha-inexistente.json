@@ -1,0 +1,7 @@
+{
+  "nome":"Sushi Bom",
+  "taxaFrete": 6,
+  "kitchen": {
+    "id":10000
+  }
+}

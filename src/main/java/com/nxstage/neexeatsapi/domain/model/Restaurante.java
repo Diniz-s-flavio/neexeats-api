@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nxstage.neexeatsapi.core.validation.Groups;
 import com.nxstage.neexeatsapi.core.validation.Multiplo;
 import com.nxstage.neexeatsapi.core.validation.ValorZeroInclueDescricao;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,6 +23,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restaurante {
     @Id
@@ -33,10 +32,12 @@ public class Restaurante {
     private Long id;
 
     @NotBlank
+    @NonNull
     @Column(nullable = false)
     private String nome;
 
     @NotNull
+    @NonNull
     @PositiveOrZero
     @Column(name = "taxa_frete",nullable = false)
     private BigDecimal taxaFrete;
@@ -45,6 +46,7 @@ public class Restaurante {
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
     @NotNull
+    @NonNull
     @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "kitchen_id",nullable = false)//define o nome na tabela restaurante da foreing Key
     private Kitchen kitchen;
