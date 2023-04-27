@@ -1,5 +1,9 @@
 package com.nxstage.neexeatsapi.api.controller;
 
+import com.nxstage.neexeatsapi.api.assembler.EstadoInputDisassembler;
+import com.nxstage.neexeatsapi.api.assembler.EstadoModelAssembler;
+import com.nxstage.neexeatsapi.api.dto.EstadoDTO;
+import com.nxstage.neexeatsapi.api.dto.input.EstadoInputDTO;
 import com.nxstage.neexeatsapi.domain.exception.EntidadeEmUsoException;
 import com.nxstage.neexeatsapi.domain.exception.EntidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.model.Estado;
@@ -25,29 +29,40 @@ public class EstadoController {
     @Autowired
     private CadastroEstadoService cadastroEstado;
 
+    @Autowired
+    private EstadoInputDisassembler estadoInputDisassembler;
+
+    @Autowired
+    private EstadoModelAssembler estadoModelAssembler;
+
     @GetMapping
-    public List<Estado> estadoList(){
-        return estadoRepository.findAll();
+    public List<EstadoDTO> estadoList(){
+        return estadoModelAssembler.toCollectionDTO(
+                estadoRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public Estado estadoOne(@PathVariable Long id){
-        return cadastroEstado.buscarOuFalhar(id);
+    public EstadoDTO estadoOne(@PathVariable Long id){
+        return estadoModelAssembler.toModel(
+                cadastroEstado.buscarOuFalhar(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Estado estadoAdd(@RequestBody @Valid Estado estado){
-        return cadastroEstado.salvar(estado);
+    public EstadoDTO estadoAdd(@RequestBody @Valid EstadoInputDTO estadoInput){
+        Estado estado = estadoInputDisassembler.toDomainObject(estadoInput);
+        return estadoModelAssembler.toModel(
+                cadastroEstado.salvar(estado));
     }
 
     @PutMapping("/{estadoId}")
-    public Estado estadoUpdate(
-            @PathVariable("estadoId")Long id,@RequestBody @Valid Estado estado){
+    public EstadoDTO estadoUpdate(
+            @PathVariable("estadoId")Long id,@RequestBody @Valid EstadoInputDTO estadoInput){
         Estado updatingEstado = cadastroEstado.buscarOuFalhar(id);
 
-            BeanUtils.copyProperties(estado,updatingEstado,"id");
-            return cadastroEstado.salvar(updatingEstado);
+            estadoInputDisassembler.copyToDomainObject(estadoInput,updatingEstado);
+            return estadoModelAssembler.toModel(
+                    cadastroEstado.salvar(updatingEstado));
     }
 
     @DeleteMapping("/{estadoId}")

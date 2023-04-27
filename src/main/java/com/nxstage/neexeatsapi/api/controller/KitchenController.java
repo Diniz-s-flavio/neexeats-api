@@ -1,5 +1,9 @@
 package com.nxstage.neexeatsapi.api.controller;
 
+import com.nxstage.neexeatsapi.api.assembler.KitchenInputDisassembler;
+import com.nxstage.neexeatsapi.api.assembler.KitchenModelAssembler;
+import com.nxstage.neexeatsapi.api.dto.KitchenDTO;
+import com.nxstage.neexeatsapi.api.dto.input.KitchenInputDTO;
 import com.nxstage.neexeatsapi.domain.model.Kitchen;
 import com.nxstage.neexeatsapi.domain.repository.KitchenRepository;
 import com.nxstage.neexeatsapi.domain.service.CadastroCozinhaService;
@@ -22,29 +26,39 @@ public class KitchenController {
     @Autowired
     private CadastroCozinhaService cadastroCozinha;
 
+    @Autowired
+    private KitchenModelAssembler kitchenModelAssembler;
+
+    @Autowired
+    private KitchenInputDisassembler kitchenInputDisassembler;
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Kitchen> kitchenList(){
-        return kitchenRepository.findAll();
+    public List<KitchenDTO> kitchenList(){
+        return kitchenModelAssembler.toCollectionDTO(kitchenRepository.findAll());
     }
 
 
     @GetMapping("/{cozinhaId}")
-    public Kitchen buscar(@PathVariable("cozinhaId") long id){
-        return cadastroCozinha.buscarOuFalhar(id);
+    public KitchenDTO buscar(@PathVariable("cozinhaId") long id){
+        return kitchenModelAssembler.toModel(
+                cadastroCozinha.buscarOuFalhar(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Kitchen addKitchem(@RequestBody @Valid Kitchen kitchen){
-        return cadastroCozinha.salvar(kitchen);
+    public KitchenDTO addKitchem(@RequestBody @Valid KitchenInputDTO kitchenInput){
+        Kitchen kitchen = kitchenInputDisassembler.toDomainObject(kitchenInput);
+        return kitchenModelAssembler.toModel(
+                cadastroCozinha.salvar(kitchen));
     }
 
     @PutMapping("/{kitchenId}")
-    public Kitchen updateKitchen(@PathVariable Long kitchenId,  @RequestBody @Valid Kitchen kitchen){
+    public KitchenDTO updateKitchen(@PathVariable Long kitchenId,  @RequestBody @Valid KitchenInputDTO kitchenInput){
         Kitchen updatingKitchen = cadastroCozinha.buscarOuFalhar(kitchenId);
 
-        BeanUtils.copyProperties(kitchen, updatingKitchen,"id");
-        return cadastroCozinha.salvar(updatingKitchen);
+        kitchenInputDisassembler.copyToDomainObject(kitchenInput,updatingKitchen);
+
+        return kitchenModelAssembler.toModel(cadastroCozinha.salvar(updatingKitchen));
     }
 
     @DeleteMapping("/{kitchenId}")

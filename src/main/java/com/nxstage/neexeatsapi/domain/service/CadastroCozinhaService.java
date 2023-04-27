@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -21,13 +22,16 @@ public class CadastroCozinhaService {
     @Autowired
     private KitchenRepository kitchenRepository;
 
+    @Transactional
     public Kitchen salvar( Kitchen kitchen){
         return kitchenRepository.save(kitchen);
     }
 
+    @Transactional
     public void excluir(Long kitchenId){
         try {
             kitchenRepository.deleteById(kitchenId);
+            kitchenRepository.flush();
         }catch(EmptyResultDataAccessException e){
             throw new CozinhaNaoEncontradaException(kitchenId);
         }catch(DataIntegrityViolationException e){

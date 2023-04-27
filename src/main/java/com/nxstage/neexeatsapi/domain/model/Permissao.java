@@ -1,6 +1,6 @@
 package com.nxstage.neexeatsapi.domain.model;
 
-import com.sun.istack.NotNull;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

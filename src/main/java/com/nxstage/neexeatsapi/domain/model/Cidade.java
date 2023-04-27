@@ -1,5 +1,6 @@
 package com.nxstage.neexeatsapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nxstage.neexeatsapi.core.validation.Groups;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

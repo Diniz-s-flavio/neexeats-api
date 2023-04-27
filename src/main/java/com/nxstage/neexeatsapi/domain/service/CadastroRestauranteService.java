@@ -9,6 +9,7 @@ import com.nxstage.neexeatsapi.domain.repository.KitchenRepository;
 import com.nxstage.neexeatsapi.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CadastroRestauranteService {
@@ -24,6 +25,7 @@ public class CadastroRestauranteService {
     @Autowired
     private KitchenRepository kitchenRepository;
 
+    @Transactional
     public Restaurante salvar(Restaurante restaurante){
         Long kitchenId = restaurante.getKitchen().getId();
         Kitchen kitchen = cadastroCozinha.buscarOuFalhar(kitchenId);

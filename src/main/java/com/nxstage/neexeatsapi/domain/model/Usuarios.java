@@ -1,13 +1,12 @@
 package com.nxstage.neexeatsapi.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class Usuarios {
 
     @CreationTimestamp
     @Column(nullable = false,columnDefinition = "datetime")
-    private LocalDateTime dataCadastro;
+    private OffsetDateTime dataCadastro;
 
     @ManyToMany
     @JoinTable(name = "usuario_grupos",joinColumns = @JoinColumn(name = "usuario_id"),

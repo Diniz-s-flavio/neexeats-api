@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -225,7 +226,7 @@ public class ApiExeptionHandler  extends ResponseEntityExceptionHandler {
             (Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         if (body == null) {
             body = Problem.builder()
-                    .timestamp(LocalDateTime.now())
+                    .timestamp(OffsetDateTime.now())
                     .title(status.getReasonPhrase())
                     .status(status.value())
                     .userMessage(MSG_ERRO_GENERICO_USERMASSAGE)
@@ -244,7 +245,7 @@ public class ApiExeptionHandler  extends ResponseEntityExceptionHandler {
             HttpStatus status, ProblemType problemType, String detail) {
 
         return Problem.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(OffsetDateTime.now())
                 .status(status.value())
                 .type(problemType.getUri())
                 .title(problemType.getTitle())
