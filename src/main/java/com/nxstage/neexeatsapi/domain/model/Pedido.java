@@ -7,7 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +51,6 @@ public class Pedido {
 
     @ManyToOne
      @JoinColumn(name = "usuario_cliente_id",nullable = false)
-    private Usuarios cliente;
+    private Usuario cliente;
 
 }

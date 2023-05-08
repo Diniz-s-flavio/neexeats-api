@@ -4,6 +4,7 @@ import com.nxstage.neexeatsapi.api.assembler.RestauranteInputDisassembler;
 import com.nxstage.neexeatsapi.api.assembler.RestauranteModelAssembler;
 import com.nxstage.neexeatsapi.api.dto.RestauranteDTO;
 import com.nxstage.neexeatsapi.api.dto.input.RestauranteInputDTO;
+import com.nxstage.neexeatsapi.domain.exception.CidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.CozinhaNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.NegocioException;
 import com.nxstage.neexeatsapi.domain.model.Restaurante;
@@ -66,18 +67,27 @@ public class RestauranteController {
     public RestauranteDTO restauranteUpdate(
             @PathVariable("restauranteId") Long id, @RequestBody @Valid RestauranteInputDTO restauranteInput) {
             Restaurante updatingRestaurante = cadastroRestaurante.buscaOuFalhar(id);
-    //      Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
 
             restauranteInputDisassembler.copyToDomainObject(restauranteInput,updatingRestaurante);
-
-    //      BeanUtils.copyProperties(restaurante, updatingRestaurante, "id", "formasPag","endereco", "dataCadastro");
 
         try{
             return restauranteModelAssembler.toModel(
                     cadastroRestaurante.salvar(updatingRestaurante));
-        }catch(CozinhaNaoEncontradaException e){
+        }catch(CozinhaNaoEncontradaException | CidadeNaoEncontradaException e){
             throw new NegocioException(e.getMessage(),e);
         }
+    }
+
+    @PutMapping("/{restauranteId}/ativar")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativar (@PathVariable("restauranteId") Long restauranteId){
+        cadastroRestaurante.ativar(restauranteId);
+    }
+
+    @DeleteMapping("/{restauranteId}/ativar")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativar (@PathVariable("restauranteId") Long restauranteId){
+        cadastroRestaurante.inativar(restauranteId);
     }
 
     //----------------------------------------------Metodos----------------------------------------------//

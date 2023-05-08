@@ -34,8 +34,8 @@ insert into estado (nome) values ('São Paulo');
 insert into cidade (nome, estado_id) values ('Orizona',1);
 insert into cidade (nome, estado_id) values ('São Paulo',2);
 
-insert into restaurante (nome, taxa_frete, kitchen_id,data_cadastro, data_atualizacao, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values ('Ichiraku',3.50,1, utc_timestamp, utc_timestamp,1,'75280000','rua 1','N/A','Centro');
-insert into restaurante (nome, taxa_frete, kitchen_id,data_cadastro, data_atualizacao) values ('Macarena',5.50,2,utc_timestamp,utc_timestamp);
+insert into restaurante (nome, taxa_frete, kitchen_id,data_cadastro, data_atualizacao, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro,ativo) values ('Ichiraku',3.50,1, utc_timestamp, utc_timestamp,1,'75280000','rua 1','N/A','Centro',true);
+insert into restaurante (nome, taxa_frete, kitchen_id,data_cadastro, data_atualizacao,ativo) values ('Macarena',5.50,2,utc_timestamp,utc_timestamp,true);
 
 insert into forma_pag (descricao) values ('Cartão');
 insert into forma_pag (descricao) values ('Pix');
@@ -47,3 +47,10 @@ insert into restaurante_forma_pag (restaurante_id, forma_pag_id) values (1, 1), 
 
 insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Roscovo', 1, 'Arroz com Ovo', 10, 1);
 insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Pave', 1, 'e Pave ou Pacume', 10, 0);
+
+insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+
+insert into usuario (nome,email,senha,data_cadastro) values ('Flávio Diniz de Sousa','dinizdesousaflavio@email.com','senha',utc_timestamp);
+insert into usuario (nome,email,senha,data_cadastro) values ('Jars','zejars@email.com','senha',utc_timestamp);
+insert into usuario (nome,email,senha,data_cadastro) values ('Jão GayGriel','yuna1201@email.com','senha',utc_timestamp);
+insert into usuario (nome,email,senha,data_cadastro) values ('Filipe Canedo','hiroto444@email.com','senha',utc_timestamp);

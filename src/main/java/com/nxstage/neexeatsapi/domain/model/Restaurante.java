@@ -31,21 +31,15 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@NotBlank
     @NonNull
     @Column(nullable = false)
     private String nome;
 
-    //@NotNull
     @NonNull
-    //@PositiveOrZero
     @Column(name = "taxa_frete",nullable = false)
     private BigDecimal taxaFrete;
 
-    //@JsonIgnore
-    //@Valid
-    //@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-    //@NotNull
+
     @NonNull
     @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "kitchen_id",nullable = false)//define o nome na tabela restaurante da foreing Key
@@ -53,6 +47,8 @@ public class Restaurante {
 
     @Embedded
     private Endereco endereco;
+
+    private Boolean ativo = Boolean.TRUE;
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
@@ -70,5 +66,12 @@ public class Restaurante {
 
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
+
+    public void  ativar(){
+        setAtivo(true);
+    }
+    public void  inativar(){
+        setAtivo(false);
+    }
 
 }

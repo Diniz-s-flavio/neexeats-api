@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
-public class Usuarios {
+public class Usuario {
 
     @Id
     @EqualsAndHashCode.Include
