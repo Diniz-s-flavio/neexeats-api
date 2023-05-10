@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FormaPagRepository extends JpaRepository<FormaPag, Long> {
+public interface FormaPagRepository extends CustomJpaRepository<FormaPag, Long> {
 
 }

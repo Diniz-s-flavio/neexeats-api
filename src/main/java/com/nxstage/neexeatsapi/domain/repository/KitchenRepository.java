@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface KitchenRepository extends JpaRepository<Kitchen, Long> {
+public interface KitchenRepository extends CustomJpaRepository<Kitchen, Long> {
     List<Kitchen> findByNomeContaining(String nome);
 
     Optional<Kitchen> findUmaByNome(String Nome);
