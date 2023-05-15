@@ -1,9 +1,8 @@
 package com.nxstage.neexeatsapi.domain.service;
 
-import com.nxstage.neexeatsapi.domain.exception.EntidadeEmUsoException;
-import com.nxstage.neexeatsapi.domain.exception.EntidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.RestauranteNaoEncontradoException;
 import com.nxstage.neexeatsapi.domain.model.Cidade;
+import com.nxstage.neexeatsapi.domain.model.FormaPag;
 import com.nxstage.neexeatsapi.domain.model.Kitchen;
 import com.nxstage.neexeatsapi.domain.model.Restaurante;
 import com.nxstage.neexeatsapi.domain.repository.KitchenRepository;
@@ -28,6 +27,8 @@ public class CadastroRestauranteService {
 
     @Autowired
     private KitchenRepository kitchenRepository;
+    @Autowired
+    private CadastroFormaPagService cadastroFormaPagService;
 
     @Transactional
     public Restaurante salvar(Restaurante restaurante){
@@ -56,6 +57,22 @@ public class CadastroRestauranteService {
     public void inativar(Long restauranteId){
         Restaurante restaurante = buscaOuFalhar(restauranteId);
         restaurante.inativar();
+    }
+
+    @Transactional
+    public void desassociarFormasPag(Long restauranteId, Long formaPagId){
+        Restaurante restaurante = buscaOuFalhar(restauranteId);
+        FormaPag formaPag = cadastroFormaPagService.buscarOuFalhar(formaPagId);
+
+        restaurante.removerFormaPag(formaPag);
+    }
+
+    @Transactional
+    public void associarFormaPag(Long restauranteId, Long formaPagId){
+        Restaurante restaurante = buscaOuFalhar(restauranteId);
+        FormaPag formaPag = cadastroFormaPagService.buscarOuFalhar(formaPagId);
+
+        restaurante.adicionarFormaPag(formaPag);
     }
 
 }

@@ -39,6 +39,5 @@ public class CadastroFormaPagService {
             throw new EntidadeEmUsoException(
                     String.format(MSG_FORMA_PAG_EM_USO,formaPagId));
         }
-
     }
 }
