@@ -42,6 +42,8 @@ insert into forma_pag (descricao) values ('Pix');
 
 insert into permissao (nome,descricao) values ('Comprar','Comprar um prato do menu');
 insert into permissao (nome,descricao) values ('Cadastrar prato','Adicionar um novo prato ao menu');
+insert into permissao (nome, descricao) values ( 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
+insert into permissao (nome, descricao) values ( 'EDITAR_COZINHAS', 'Permite editar cozinhas');
 
 insert into restaurante_forma_pag (restaurante_id, forma_pag_id) values (1, 1), (1, 2), (2, 1), (2, 2);
 
@@ -49,6 +51,8 @@ insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Ros
 insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Pave', 1, 'e Pave ou Pacume', 10, 0);
 
 insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+
+insert into grupo_permissoes (grupo_id, permissao_id) values (1, 1), (1, 2), (1,3), (1,4), (2, 1), (2, 2), (3, 1);
 
 insert into usuario (nome,email,senha,data_cadastro) values ('Flávio Diniz de Sousa','dinizdesousaflavio@email.com','senha',utc_timestamp);
 insert into usuario (nome,email,senha,data_cadastro) values ('Jars','zejars@email.com','senha',utc_timestamp);

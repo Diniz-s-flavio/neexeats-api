@@ -1,10 +1,14 @@
 package com.nxstage.neexeatsapi.domain.service;
 
+import com.nxstage.neexeatsapi.domain.exception.EntidadeEmUsoException;
+import com.nxstage.neexeatsapi.domain.exception.FormaPagNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.ProdutoNaoEncontradoException;
 import com.nxstage.neexeatsapi.domain.model.Produto;
 import com.nxstage.neexeatsapi.domain.model.Restaurante;
 import com.nxstage.neexeatsapi.domain.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,11 +30,6 @@ public class CadastroProdutoService {
     @Transactional
     public Produto salvar(Produto produto){
         return  produtoRepository.save(produto);
-    }
-
-    @Transactional
-    public void excluir(Long id){
-        produtoRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)

@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,5 +26,12 @@ public class Grupo {
     @ManyToMany
     @JoinTable(name = "grupo_permissoes",joinColumns = @JoinColumn(name = "grupo_id"),
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
-    private List<Permissao> permissoes = new ArrayList<>();
+    private Set<Permissao> permissoes = new HashSet<>();
+
+    public void linkPermissao(Permissao permissao){
+        getPermissoes().add(permissao);
+    }
+    public void unlinkPermissao(Permissao permissao){
+        getPermissoes().remove(permissao);
+    }
 }

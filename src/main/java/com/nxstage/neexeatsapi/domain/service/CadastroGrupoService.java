@@ -4,6 +4,7 @@ import com.nxstage.neexeatsapi.domain.exception.EntidadeEmUsoException;
 import com.nxstage.neexeatsapi.domain.exception.EntidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.GrupoNaoEncontradoException;
 import com.nxstage.neexeatsapi.domain.model.Grupo;
+import com.nxstage.neexeatsapi.domain.model.Permissao;
 import com.nxstage.neexeatsapi.domain.repository.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,6 +21,8 @@ public class CadastroGrupoService {
     public static final String MSG_ENTIDADE_EM_USO = "Não foi possível excluir Grupo de id '%d', Pois esta em uso";
     @Autowired
     private GrupoRepository grupoRepository;
+    @Autowired
+    private CadastroPermissaoService cadastroPermissao;
 
     public Grupo buscarOuFalhar(Long id){
         return grupoRepository.findById(id).orElseThrow(()->
@@ -43,5 +46,21 @@ public class CadastroGrupoService {
             throw new EntidadeEmUsoException(
                     String.format(MSG_ENTIDADE_EM_USO,id));
         }
+    }
+
+    @Transactional
+    public void linkPermissao(Long grupoId, Long permissaoId){
+        Grupo grupo = buscarOuFalhar(grupoId);
+        Permissao permissao = cadastroPermissao.buscarOuFalhar(permissaoId);
+
+        grupo.linkPermissao(permissao);
+    }
+
+    @Transactional
+    public void unlinkPermissao(Long grupoId, Long permissaoId){
+        Grupo grupo = buscarOuFalhar(grupoId);
+        Permissao permissao = cadastroPermissao.buscarOuFalhar(permissaoId);
+
+        grupo.unlinkPermissao(permissao);
     }
 }
