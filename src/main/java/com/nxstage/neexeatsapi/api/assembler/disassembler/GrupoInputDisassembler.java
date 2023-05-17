@@ -1,4 +1,4 @@
-package com.nxstage.neexeatsapi.api.assembler;
+package com.nxstage.neexeatsapi.api.assembler.disassembler;
 
 import com.nxstage.neexeatsapi.api.dto.input.GrupoInputDTO;
 import com.nxstage.neexeatsapi.domain.model.Grupo;

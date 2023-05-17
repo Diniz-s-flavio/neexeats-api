@@ -1,6 +1,6 @@
 package com.nxstage.neexeatsapi.api.controller;
 
-import com.nxstage.neexeatsapi.api.assembler.GrupoInputDisassembler;
+import com.nxstage.neexeatsapi.api.assembler.disassembler.GrupoInputDisassembler;
 import com.nxstage.neexeatsapi.api.assembler.GrupoModelAssembler;
 import com.nxstage.neexeatsapi.api.dto.GrupoDTO;
 import com.nxstage.neexeatsapi.api.dto.input.GrupoInputDTO;

@@ -1,4 +1,4 @@
-package com.nxstage.neexeatsapi.api.assembler;
+package com.nxstage.neexeatsapi.api.assembler.disassembler;
 
 import com.nxstage.neexeatsapi.api.dto.input.CidadeInputDTO;
 import com.nxstage.neexeatsapi.domain.model.Cidade;

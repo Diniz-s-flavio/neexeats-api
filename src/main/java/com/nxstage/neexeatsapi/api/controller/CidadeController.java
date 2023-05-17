@@ -1,6 +1,6 @@
 package com.nxstage.neexeatsapi.api.controller;
 
-import com.nxstage.neexeatsapi.api.assembler.CidadeInputDisassembler;
+import com.nxstage.neexeatsapi.api.assembler.disassembler.CidadeInputDisassembler;
 import com.nxstage.neexeatsapi.api.assembler.CidadeModelAssembler;
 import com.nxstage.neexeatsapi.api.dto.CidadeDTO;
 import com.nxstage.neexeatsapi.api.dto.input.CidadeInputDTO;
@@ -9,10 +9,8 @@ import com.nxstage.neexeatsapi.domain.exception.NegocioException;
 import com.nxstage.neexeatsapi.domain.model.Cidade;
 import com.nxstage.neexeatsapi.domain.repository.CidadeRepository;
 import com.nxstage.neexeatsapi.domain.service.CadastroCidadeService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

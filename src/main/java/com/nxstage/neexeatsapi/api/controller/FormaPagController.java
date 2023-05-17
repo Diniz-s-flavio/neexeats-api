@@ -1,6 +1,6 @@
 package com.nxstage.neexeatsapi.api.controller;
 
-import com.nxstage.neexeatsapi.api.assembler.FormaPagInputDisassembler;
+import com.nxstage.neexeatsapi.api.assembler.disassembler.FormaPagInputDisassembler;
 import com.nxstage.neexeatsapi.api.assembler.FormaPagModelAssembler;
 import com.nxstage.neexeatsapi.api.dto.FormaPagDTO;
 import com.nxstage.neexeatsapi.api.dto.input.FormaPagInputDTO;

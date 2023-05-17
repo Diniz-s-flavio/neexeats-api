@@ -1,4 +1,4 @@
-package com.nxstage.neexeatsapi.api.assembler;
+package com.nxstage.neexeatsapi.api.assembler.disassembler;
 
 import com.nxstage.neexeatsapi.api.dto.UsuarioDTO;
 import com.nxstage.neexeatsapi.api.dto.input.UsuarioInputDTO;

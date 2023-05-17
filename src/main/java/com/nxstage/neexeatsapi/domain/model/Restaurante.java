@@ -69,7 +69,6 @@ public class Restaurante {
         setAtivo(false);
     }
 
-
     public boolean adicionarFormaPag(FormaPag formaPag){
         return getFormaPag().add(formaPag);
     }

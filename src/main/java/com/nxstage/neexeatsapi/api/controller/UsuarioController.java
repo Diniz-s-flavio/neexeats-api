@@ -1,6 +1,6 @@
 package com.nxstage.neexeatsapi.api.controller;
 
-import com.nxstage.neexeatsapi.api.assembler.UsuarioInputDisassembler;
+import com.nxstage.neexeatsapi.api.assembler.disassembler.UsuarioInputDisassembler;
 import com.nxstage.neexeatsapi.api.assembler.UsuarioModelAssembler;
 import com.nxstage.neexeatsapi.api.dto.UsuarioDTO;
 import com.nxstage.neexeatsapi.api.dto.input.UsuarioInputDTO;
