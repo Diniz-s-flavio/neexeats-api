@@ -34,8 +34,8 @@ insert into estado (nome) values ('São Paulo');
 insert into cidade (nome, estado_id) values ('Orizona',1);
 insert into cidade (nome, estado_id) values ('São Paulo',2);
 
-insert into restaurante (nome, taxa_frete, kitchen_id,data_cadastro, data_atualizacao, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro,ativo) values ('Ichiraku',3.50,1, utc_timestamp, utc_timestamp,1,'75280000','rua 1','N/A','Centro',true);
-insert into restaurante (nome, taxa_frete, kitchen_id,data_cadastro, data_atualizacao,ativo) values ('Macarena',5.50,2,utc_timestamp,utc_timestamp,true);
+insert into restaurante (nome, taxa_frete, kitchen_id,data_cadastro, data_atualizacao, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro,ativo,aberto) values ('Ichiraku',3.50,1, utc_timestamp, utc_timestamp,1,'75280000','rua 1','N/A','Centro',true,true);
+insert into restaurante (nome, taxa_frete, kitchen_id,data_cadastro, data_atualizacao,ativo,aberto) values ('Macarena',5.50,2,utc_timestamp,utc_timestamp,true,true);
 
 insert into forma_pag (descricao) values ('Cartão');
 insert into forma_pag (descricao) values ('Pix');

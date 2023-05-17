@@ -44,6 +44,7 @@ public class Restaurante {
     private Endereco endereco;
 
     private Boolean ativo = Boolean.TRUE;
+    private Boolean aberto = Boolean.TRUE;
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
@@ -67,6 +68,12 @@ public class Restaurante {
     }
     public void  inativar(){
         setAtivo(false);
+    }
+    public void open(){
+        setAberto(true);
+    }
+    public void close(){
+        setAberto(false);
     }
 
     public boolean adicionarFormaPag(FormaPag formaPag){
