@@ -4,6 +4,7 @@ import com.nxstage.neexeatsapi.core.validation.ValorZeroInclueDescricao;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -63,6 +64,12 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "restaurante_usuario_responsavel",
+            joinColumns = @JoinColumn(name = "restaurante_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private Set<Usuario> usuariosResponsaveis = new HashSet<>();
+
     public void  ativar(){
         setAtivo(true);
     }
@@ -82,6 +89,12 @@ public class Restaurante {
 
     public boolean removerFormaPag(FormaPag formaPag){
         return  getFormaPag().remove(formaPag);
+    }
+    public boolean linkUsuarioResponsavel(Usuario usuario){
+        return getUsuariosResponsaveis().add(usuario);
+    }
+    public boolean unlinkUsuarioResponsavel(Usuario usuario){
+        return  getUsuariosResponsaveis().add(usuario);
     }
 
 }

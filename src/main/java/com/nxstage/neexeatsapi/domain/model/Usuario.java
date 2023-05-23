@@ -41,10 +41,18 @@ public class Usuario {
                 inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     private Set<Grupo> grupos = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "restaurante_usuario_responsavel",joinColumns = @JoinColumn(name = "usuario_id"),
+                inverseJoinColumns = @JoinColumn(name = "restaurante_id"))
+    private Set<Restaurante> restaurantes = new HashSet<>();
+
     public void linkGrupo(Grupo grupo){
         grupos.add(grupo);
     }
     public void unlinkGrupo(Grupo grupo){
         grupos.remove(grupo);
     }
+
+    public void linkRestaurante(Restaurante restaurante){restaurantes.add(restaurante);}
+    public void  unlinkRestaurante(Restaurante restaurante){restaurantes.remove(restaurante);}
 }

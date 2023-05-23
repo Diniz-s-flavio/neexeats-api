@@ -1,10 +1,7 @@
 package com.nxstage.neexeatsapi.domain.service;
 
 import com.nxstage.neexeatsapi.domain.exception.RestauranteNaoEncontradoException;
-import com.nxstage.neexeatsapi.domain.model.Cidade;
-import com.nxstage.neexeatsapi.domain.model.FormaPag;
-import com.nxstage.neexeatsapi.domain.model.Kitchen;
-import com.nxstage.neexeatsapi.domain.model.Restaurante;
+import com.nxstage.neexeatsapi.domain.model.*;
 import com.nxstage.neexeatsapi.domain.repository.KitchenRepository;
 import com.nxstage.neexeatsapi.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +13,6 @@ public class CadastroRestauranteService {
 
     public static final String MSG_RESTAURANTE_NAO_ENCONTRADO
             = "O Restaurante de Id: %d não consta na base de dados";
-    @Autowired
-    private CadastroCozinhaService cadastroCozinha;
-
-    @Autowired
-    private CadastroCidadeService cadastroCidade;
 
     @Autowired
     private RestauranteRepository restauranteRepository;
@@ -29,6 +21,12 @@ public class CadastroRestauranteService {
     private KitchenRepository kitchenRepository;
     @Autowired
     private CadastroFormaPagService cadastroFormaPagService;
+    @Autowired
+    private CadastroCozinhaService cadastroCozinha;
+    @Autowired
+    private CadastroCidadeService cadastroCidade;
+    @Autowired
+    private CadastroUsuarioService cadastroUsuario;
 
     @Transactional
     public Restaurante salvar(Restaurante restaurante){
@@ -84,6 +82,21 @@ public class CadastroRestauranteService {
     public void closeRestaurante(Long id){
         Restaurante restaurante = buscaOuFalhar(id);
         restaurante.close();
+    }
+
+    @Transactional
+    public void linkUsuarioResponsavel(Long restauranteId, Long usuarioId){
+        Restaurante restaurante = buscaOuFalhar(restauranteId);
+        Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+
+        restaurante.getUsuariosResponsaveis().add(usuario);
+    }
+    @Transactional
+    public void unlinkUsuarioResponsavel(Long restauranteId, Long usuarioId){
+        Restaurante restaurante = buscaOuFalhar(restauranteId);
+        Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+
+        restaurante.getUsuariosResponsaveis().remove(usuario);
     }
 
 }
