@@ -23,15 +23,13 @@ public class RestauranteResponsavelControlle {
     private CadastroRestauranteService cadastroRestaurante;
     @Autowired
     private UsuarioModelAssembler usuarioModelAssembler;
-    @Autowired
-    private CadastroUsuarioService cadastroUsuario;
 
     @GetMapping
     public List<UsuarioDTO> listResponsaveis(@PathVariable("restauranteId") Long restauranteId){
         Restaurante restaurante = cadastroRestaurante.buscaOuFalhar(restauranteId);
 
         return usuarioModelAssembler.toCollectionDTO(
-                cadastroUsuario.findByRestaurantes(restaurante));
+                restaurante.getUsuariosResponsaveis());
     }
 
     @PutMapping("/{usuarioId}")

@@ -21,10 +21,6 @@ public class CadastroUsuarioService {
     @Autowired
     private CadastroGrupoService cadastroGrupo;
 
-    public List<Usuario> findByRestaurantes(Restaurante restaurante){
-        return usuarioRepository.findByRestaurantes(restaurante);
-    }
-
     public Usuario buscarOuFalhar(Long id){
         return usuarioRepository.findById(id).orElseThrow(()->
                 new UsuarioNaoEncontradaException(id));

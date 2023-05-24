@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface UsuarioRepository extends CustomJpaRepository<Usuario,Long> {
     Optional<Usuario> findByEmail(String email);
-    List<Usuario> findByRestaurantes(Restaurante restaurante);
 }

@@ -7,6 +7,7 @@ import com.nxstage.neexeatsapi.api.dto.input.RestauranteInputDTO;
 import com.nxstage.neexeatsapi.domain.exception.CidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.CozinhaNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.NegocioException;
+import com.nxstage.neexeatsapi.domain.exception.RestauranteNaoEncontradoException;
 import com.nxstage.neexeatsapi.domain.model.Restaurante;
 import com.nxstage.neexeatsapi.domain.repository.RestauranteRepository;
 import com.nxstage.neexeatsapi.domain.service.CadastroRestauranteService;
@@ -89,6 +90,25 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void inativar (@PathVariable("restauranteId") Long restauranteId){
         cadastroRestaurante.inativar(restauranteId);
+    }
+
+    @PutMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void activateRestauranteList(@RequestBody List<Long> restaurantesIds){
+        try{
+            cadastroRestaurante.ativar(restaurantesIds);
+        }catch(RestauranteNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
+    }
+    @DeleteMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void unactivateRestauranteList(@RequestBody List<Long> restaurantesIds){
+        try{
+            cadastroRestaurante.inativar(restaurantesIds);
+        }catch(RestauranteNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
     }
 
     //----------------------------------------------Abertura----------------------------------------------//
