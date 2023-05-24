@@ -29,12 +29,13 @@ public class Pedido {
     private OffsetDateTime dataCriacao;
 
     private OffsetDateTime dataConfirmacao;
-    private OffsetDateTime datdaEntrega;
+    private OffsetDateTime dataEntrega;
 
     @Embedded
     private Endereco enderecoEntrega;
 
-    private enum status{};
+    @Enumerated(EnumType.STRING)
+    private StatusPedido status = StatusPedido.CRIADO;
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens= new ArrayList<>();

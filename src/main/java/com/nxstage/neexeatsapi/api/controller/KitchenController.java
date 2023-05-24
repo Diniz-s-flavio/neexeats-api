@@ -38,7 +38,7 @@ public class KitchenController {
 
 
     @GetMapping("/{cozinhaId}")
-    public KitchenDTO buscar(@PathVariable("cozinhaId") long id){
+    public KitchenDTO buscar(@PathVariable("cozinhaId") Long id){
         return kitchenModelAssembler.toModel(
                 cadastroCozinha.buscarOuFalhar(id));
     }

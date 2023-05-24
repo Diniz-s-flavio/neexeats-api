@@ -13,6 +13,8 @@ delete from restaurante_forma_pag;
 delete from usuario;
 delete from usuario_grupo;
 delete from restaurante_usuario_responsavel;
+delete from pedido;
+delete from item_pedido;
 
 set foreign_key_checks = 1;
 
@@ -25,6 +27,8 @@ alter table permissao auto_increment = 1;
 alter table produto auto_increment = 1;
 alter table restaurante auto_increment = 1;
 alter table usuario auto_increment = 1;
+alter table pedido auto_increment = 1;
+alter table item_pedido auto_increment = 1;
 
 insert into kitchen (nome) values ('Japonesa');
 insert into kitchen (nome) values ('Mexicana');
@@ -49,6 +53,7 @@ insert into permissao (nome, descricao) values ( 'EDITAR_COZINHAS', 'Permite edi
 insert into restaurante_forma_pag (restaurante_id, forma_pag_id) values (1, 1), (1, 2), (2, 1), (2, 2);
 
 insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Roscovo', 1, 'Arroz com Ovo', 10, 1);
+insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Yakisoba', 1, 'testes vlangas', 10, 0);
 insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Pave', 1, 'e Pave ou Pacume', 10, 0);
 
 insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
@@ -63,3 +68,25 @@ insert into usuario (nome,email,senha,data_cadastro) values ('Filipe Canedo','hi
 insert into usuario_grupo (usuario_id,grupo_id) values (1,1), (1,2), (1,3), (1,4), (2,1), (2,2), (4,1), (4,4);
 
 insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1,1),(2,1),(2,2),(1,3);
+
+insert into pedido ( restaurante_id, usuario_cliente_id, forma_pag_id, endereco_cidade_id, endereco_cep,
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+	                status, data_criacao, subtotal, taxa_frete, valor_total)
+values ( 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+        'CRIADO', utc_timestamp, 298.90, 10, 308.90);
+
+insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values ( 1, 1, 1, 78.9, 78.9, null);
+
+insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values ( 1, 2, 2, 110, 220, 'Menos picante, por favor');
+
+
+insert into pedido (id, restaurante_id, usuario_cliente_id, forma_pag_id, endereco_cidade_id, endereco_cep,
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+	                status, data_criacao, subtotal, taxa_frete, valor_total)
+values (2, 2, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
+        'CRIADO', utc_timestamp, 79, 0, 79);
+
+insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values ( 1, 3, 1, 79, 79, 'Ao ponto');
