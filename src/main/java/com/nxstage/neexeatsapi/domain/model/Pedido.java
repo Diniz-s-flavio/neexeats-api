@@ -46,7 +46,7 @@ public class Pedido {
     @JoinColumn(nullable = false)
     private Restaurante restaurante;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private FormaPag formaPag;
 

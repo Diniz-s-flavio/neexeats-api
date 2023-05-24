@@ -2,9 +2,11 @@ package com.nxstage.neexeatsapi.api.controller;
 
 import com.nxstage.neexeatsapi.api.assembler.KitchenModelAssembler;
 import com.nxstage.neexeatsapi.api.assembler.PedidoModelAssembler;
+import com.nxstage.neexeatsapi.api.assembler.PedidoResumoModelAssembler;
 import com.nxstage.neexeatsapi.api.assembler.disassembler.KitchenInputDisassembler;
 import com.nxstage.neexeatsapi.api.dto.KitchenDTO;
 import com.nxstage.neexeatsapi.api.dto.PedidoDTO;
+import com.nxstage.neexeatsapi.api.dto.PedidoResumoDTO;
 import com.nxstage.neexeatsapi.api.dto.input.KitchenInputDTO;
 import com.nxstage.neexeatsapi.domain.model.Kitchen;
 import com.nxstage.neexeatsapi.domain.repository.KitchenRepository;
@@ -26,10 +28,12 @@ public class PedidoController {
 
     @Autowired
     private PedidoModelAssembler pedidoModelAssembler;
+    @Autowired
+    private PedidoResumoModelAssembler pedidoResumoModelAssembler;
 
     @GetMapping
-    public List<PedidoDTO> listPedido(){
-        return pedidoModelAssembler.toCollectionDTO(
+    public List<PedidoResumoDTO> listPedido(){
+        return pedidoResumoModelAssembler.toCollectionDTO(
                 cadastroPedido.findAll());
     }
 
