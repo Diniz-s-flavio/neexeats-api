@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -32,5 +30,17 @@ public class ItemPedido {
     @ManyToOne
     private Produto produto;
 
+    public void calcTotalCost(){
+        BigDecimal precoUnitario = this.getPrecoUnitario();
+        Integer quantidade = this.getQuantidade();
 
+        if (precoUnitario == null) {
+            precoUnitario = BigDecimal.ZERO;
+        }
+        if (quantidade == null) {
+            quantidade=0;
+        }
+
+        setPrecoTotal(precoUnitario.multiply(new BigDecimal(quantidade)));
+    }
 }

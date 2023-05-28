@@ -4,7 +4,6 @@ import com.nxstage.neexeatsapi.core.validation.ValorZeroInclueDescricao;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -89,6 +88,13 @@ public class Restaurante {
 
     public boolean removerFormaPag(FormaPag formaPag){
         return  getFormaPag().remove(formaPag);
+    }
+
+    public boolean aceitaFormaPag(FormaPag formaPag){
+        return getFormaPag().contains(formaPag);
+    }
+    public boolean naoAceitaFormaPag(FormaPag formaPag){
+        return !aceitaFormaPag(formaPag);
     }
     public boolean linkUsuarioResponsavel(Usuario usuario){
         return getUsuariosResponsaveis().add(usuario);

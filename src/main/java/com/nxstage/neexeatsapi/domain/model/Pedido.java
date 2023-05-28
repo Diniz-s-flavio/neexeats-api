@@ -37,7 +37,7 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     private StatusPedido status = StatusPedido.CRIADO;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL)
     private List<ItemPedido> itens= new ArrayList<>();
 
 
@@ -54,4 +54,13 @@ public class Pedido {
      @JoinColumn(name = "usuario_cliente_id",nullable = false)
     private Usuario cliente;
 
+    public void calcTotalValue(){
+        getItens().forEach(ItemPedido::calcTotalCost);
+
+        this.subtotal =getItens().stream()
+                .map(iten-> iten.getPrecoTotal())
+                .reduce(BigDecimal.ZERO,BigDecimal::add);
+
+        this.valorTotal =this.subtotal.add(this.taxaFrete);
+    }
 }
