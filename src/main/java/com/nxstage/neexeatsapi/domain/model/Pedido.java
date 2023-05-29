@@ -30,6 +30,7 @@ public class Pedido {
 
     private OffsetDateTime dataConfirmacao;
     private OffsetDateTime dataEntrega;
+    private OffsetDateTime dataCancelamento;
 
     @Embedded
     private Endereco enderecoEntrega;

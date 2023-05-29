@@ -1,0 +1,1 @@
+alter table pedido add column data_cancelamento datetime;
