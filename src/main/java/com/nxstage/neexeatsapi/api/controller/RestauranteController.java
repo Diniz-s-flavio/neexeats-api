@@ -1,9 +1,11 @@
 package com.nxstage.neexeatsapi.api.controller;
 
-import com.nxstage.neexeatsapi.api.assembler.disassembler.RestauranteInputDisassembler;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.nxstage.neexeatsapi.api.assembler.RestauranteModelAssembler;
+import com.nxstage.neexeatsapi.api.assembler.disassembler.RestauranteInputDisassembler;
 import com.nxstage.neexeatsapi.api.dto.RestauranteDTO;
 import com.nxstage.neexeatsapi.api.dto.input.RestauranteInputDTO;
+import com.nxstage.neexeatsapi.api.dto.view.RestauranteView;
 import com.nxstage.neexeatsapi.domain.exception.CidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.CozinhaNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.NegocioException;
@@ -34,11 +36,16 @@ public class RestauranteController {
     @Autowired
     private RestauranteInputDisassembler restauranteInputDisassembler;
 
-    @GetMapping
+    @GetMapping()
+    @JsonView(RestauranteView.Resumo.class)
     public List<RestauranteDTO> restauranteList(){
-        List<Restaurante> restaurantes = restauranteRepository.findAll();
-
-        return restauranteModelAssembler.toCollectionDTO(restaurantes);
+        return restauranteModelAssembler.toCollectionDTO(
+                restauranteRepository.findAll());
+    }
+    @GetMapping(params = "projecao=apenas-nome")
+    @JsonView(RestauranteView.ApenasNome.class)
+    public List<RestauranteDTO> restauranteNomeList(){
+        return restauranteList();
     }
 
     @GetMapping("/{restauranteId}")
