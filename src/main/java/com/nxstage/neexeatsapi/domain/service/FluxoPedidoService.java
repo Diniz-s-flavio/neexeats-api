@@ -10,20 +10,20 @@ public class FluxoPedidoService {
     @Autowired
     private EmissaoPerdidoService emissaoPerdido;
     @Transactional
-    public void confirmar(Long pedidoId){
-        Pedido pedido = emissaoPerdido.buscarOuFalhar(pedidoId);
+    public void confirmar(String pedidoCode){
+        Pedido pedido = emissaoPerdido.buscarOuFalhar(pedidoCode);
 
         pedido.confirmar();
     }
     @Transactional
-    public void cancelar(Long pedidoId){
-        Pedido pedido = emissaoPerdido.buscarOuFalhar(pedidoId);
+    public void cancelar(String pedidoCode){
+        Pedido pedido = emissaoPerdido.buscarOuFalhar(pedidoCode);
 
         pedido.cancelar();
     }
     @Transactional
-    public void entregar(Long pedidoId){
-        Pedido pedido = emissaoPerdido.buscarOuFalhar(pedidoId);
+    public void entregar(String pedidoCode){
+        Pedido pedido = emissaoPerdido.buscarOuFalhar(pedidoCode);
 
         pedido.enviar();
     }

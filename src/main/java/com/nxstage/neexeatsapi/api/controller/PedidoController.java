@@ -14,6 +14,7 @@ import com.nxstage.neexeatsapi.domain.repository.PedidoRepository;
 import com.nxstage.neexeatsapi.domain.service.CadastroUsuarioService;
 import com.nxstage.neexeatsapi.domain.service.EmissaoPerdidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,13 +43,14 @@ public class PedidoController {
     }
 
 
-    @GetMapping("/{pedidoId}")
-    public PedidoDTO buscar(@PathVariable("pedidoId") Long pedidoId){
+    @GetMapping("/{pedidoCode}")
+    public PedidoDTO buscar(@PathVariable("pedidoCode") String pedidoCode){
         return pedidoModelAssembler.toModel(
-                emissaoPerdido.buscarOuFalhar(pedidoId));
+                emissaoPerdido.buscarOuFalhar(pedidoCode));
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PedidoDTO addPedido(@RequestBody @Valid PedidoInputDTO pedidoInput){
         try{
             Pedido newPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);

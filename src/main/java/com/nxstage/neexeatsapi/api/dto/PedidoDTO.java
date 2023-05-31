@@ -1,10 +1,9 @@
 package com.nxstage.neexeatsapi.api.dto;
 
-import com.nxstage.neexeatsapi.domain.model.*;
+import com.nxstage.neexeatsapi.domain.model.StatusPedido;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class PedidoDTO {
-    private Long id;
+    private String codigo;
     private BigDecimal subtotal;
     private BigDecimal taxaFrete;
     private BigDecimal valorTotal;
