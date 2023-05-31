@@ -36,6 +36,7 @@ public class PedidoController {
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
 
+
     @GetMapping
     public List<PedidoResumoDTO> listPedido(){
         return pedidoResumoModelAssembler.toCollectionDTO(

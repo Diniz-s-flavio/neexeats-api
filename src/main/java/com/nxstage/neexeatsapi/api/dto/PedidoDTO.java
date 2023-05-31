@@ -1,5 +1,6 @@
 package com.nxstage.neexeatsapi.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.nxstage.neexeatsapi.domain.model.StatusPedido;
 import lombok.Data;
 import lombok.NoArgsConstructor;
