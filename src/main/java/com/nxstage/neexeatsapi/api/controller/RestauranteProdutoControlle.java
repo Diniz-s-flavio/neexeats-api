@@ -6,7 +6,6 @@ import com.nxstage.neexeatsapi.api.dto.ProdutoDTO;
 import com.nxstage.neexeatsapi.api.dto.input.ProdutoInputDTO;
 import com.nxstage.neexeatsapi.domain.model.Produto;
 import com.nxstage.neexeatsapi.domain.model.Restaurante;
-import com.nxstage.neexeatsapi.domain.repository.ProdutoRepository;
 import com.nxstage.neexeatsapi.domain.service.CadastroProdutoService;
 import com.nxstage.neexeatsapi.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +27,19 @@ public class RestauranteProdutoControlle {
     private ProdutoInputDisassembler produtoInputDisassembler;
 
     @GetMapping
-    public List<ProdutoDTO> listProduto(@PathVariable("restauranteId") Long restauranteId){
+    public List<ProdutoDTO> listProduto(
+            @PathVariable("restauranteId") Long restauranteId,
+            @RequestParam(required = false) boolean includeInactive){
         Restaurante restaurante = cadastroRestaurante.buscaOuFalhar(restauranteId);
+        List<Produto> produtos = null;
 
-        return produtoModelAssembler.toCollectionDTO(
-                cadastroProduto.findByRestaurante(restaurante));
+        if (includeInactive){
+            produtos = cadastroProduto.findAllByRestaurante(restaurante);
+        }else {
+            produtos = cadastroProduto.findActiveByRestaurante(restaurante);
+        }
+
+        return produtoModelAssembler.toCollectionDTO(produtos);
     }
 
     @GetMapping("/{produtoId}")

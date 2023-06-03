@@ -52,8 +52,8 @@ insert into permissao (nome, descricao) values ( 'EDITAR_COZINHAS', 'Permite edi
 
 insert into restaurante_forma_pag (restaurante_id, forma_pag_id) values (1, 1), (1, 2), (2, 1), (2, 2);
 
-insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Roscovo', 1, 'Arroz com Ovo', 10, 1);
-insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Yakisoba', 1, 'testes vlangas', 10, 0);
+insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Roscovo', 1, 'Arroz com Ovo', 10, 0);
+insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Yakisoba', 1, 'testes vlangas', 10, 1);
 insert into produto (nome, restaurante_id, descricao, preco, ativo) values ('Pave', 1, 'e Pave ou Pacume', 10, 0);
 
 insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
@@ -89,4 +89,28 @@ values (2, "2acdda8a-be91-48b7-8f72-64a1486417b2", 2, 1, 2, 1, '38400-111', 'Rua
         'CRIADO', utc_timestamp, 79, 0, 79);
 
 insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
-values ( 1, 3, 1, 79, 79, 'Ao ponto');
+values ( 2, 3, 1, 79, 79, 'Ao ponto');
+
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pag_id, endereco_cidade_id, endereco_cep,
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+	                status, data_criacao, subtotal, taxa_frete, valor_total)
+values (3, "2acdda8a-be91-48b7-8f72-64a1486417b3", 1, 2, 2, 2, '38400-000', 'rua 1', '500', 'Apto 801', 'Brasil',
+        'CRIADO', utc_timestamp, 298.90, 10, 308.90);
+
+insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values ( 3, 1, 1, 78.9, 78.9, "vrum vrum");
+
+insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values ( 3, 2, 2, 110, 220, 'Menos picante, por favor');
+
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pag_id, endereco_cidade_id, endereco_cep,
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+	                status, data_criacao, subtotal, taxa_frete, valor_total)
+values (4, "2acdda8a-be91-48b7-8f72-64a1486417b4", 1, 2, 2, 2, '38400-000', 'rua 1', '500', 'Apto 801', 'Brasil',
+        'CRIADO', utc_timestamp, 298.90, 10, 308.90);
+
+insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values ( 4, 1, 1, 78.9, 78.9, "Ran DAn dan");
+
+insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values ( 4, 2, 2, 110, 220, 'Menos picante, por favor');

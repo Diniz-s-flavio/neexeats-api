@@ -11,8 +11,10 @@ import com.nxstage.neexeatsapi.domain.exception.NegocioException;
 import com.nxstage.neexeatsapi.domain.model.Pedido;
 import com.nxstage.neexeatsapi.domain.model.Usuario;
 import com.nxstage.neexeatsapi.domain.repository.PedidoRepository;
+import com.nxstage.neexeatsapi.domain.repository.filter.PedidoFilter;
 import com.nxstage.neexeatsapi.domain.service.CadastroUsuarioService;
 import com.nxstage.neexeatsapi.domain.service.EmissaoPerdidoService;
+import com.nxstage.neexeatsapi.infrastructure.repository.spec.PedidoSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +40,9 @@ public class PedidoController {
 
 
     @GetMapping
-    public List<PedidoResumoDTO> listPedido(){
+    public List<PedidoResumoDTO> search(PedidoFilter pedidoFilter){
         return pedidoResumoModelAssembler.toCollectionDTO(
-                pedidoRepository.findAll());
+                pedidoRepository.findAll(PedidoSpecs.useFilter(pedidoFilter)));
     }
 
 
