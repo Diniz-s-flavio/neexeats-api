@@ -16,6 +16,9 @@ import com.nxstage.neexeatsapi.domain.service.CadastroUsuarioService;
 import com.nxstage.neexeatsapi.domain.service.EmissaoPerdidoService;
 import com.nxstage.neexeatsapi.infrastructure.repository.spec.PedidoSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,9 +43,13 @@ public class PedidoController {
 
 
     @GetMapping
-    public List<PedidoResumoDTO> search(PedidoFilter pedidoFilter){
-        return pedidoResumoModelAssembler.toCollectionDTO(
-                pedidoRepository.findAll(PedidoSpecs.useFilter(pedidoFilter)));
+    public Page<PedidoResumoDTO> search(Pageable pageable, PedidoFilter pedidoFilter){
+        Page<Pedido> pedidos = pedidoRepository.findAll(PedidoSpecs.useFilter(pedidoFilter),pageable);
+        List<PedidoResumoDTO> pedidoResumoList = pedidoResumoModelAssembler.toCollectionDTO(pedidos.getContent());
+        Page<PedidoResumoDTO> pedidoResumoPage = new PageImpl<>(pedidoResumoList,pageable,
+                pedidos.getTotalElements());
+
+        return  pedidoResumoPage;
     }
 
 
