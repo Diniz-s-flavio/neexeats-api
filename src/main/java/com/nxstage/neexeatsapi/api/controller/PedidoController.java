@@ -6,6 +6,7 @@ import com.nxstage.neexeatsapi.api.assembler.disassembler.PedidoInputDisassemble
 import com.nxstage.neexeatsapi.api.dto.PedidoDTO;
 import com.nxstage.neexeatsapi.api.dto.PedidoResumoDTO;
 import com.nxstage.neexeatsapi.api.dto.input.PedidoInputDTO;
+import com.nxstage.neexeatsapi.core.data.PageableTranslator;
 import com.nxstage.neexeatsapi.domain.exception.EntidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.NegocioException;
 import com.nxstage.neexeatsapi.domain.model.Pedido;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -44,7 +46,10 @@ public class PedidoController {
 
     @GetMapping
     public Page<PedidoResumoDTO> search(Pageable pageable, PedidoFilter pedidoFilter){
-        Page<Pedido> pedidos = pedidoRepository.findAll(PedidoSpecs.useFilter(pedidoFilter),pageable);
+        Page<Pedido> pedidos = pedidoRepository.findAll(
+                PedidoSpecs.useFilter(pedidoFilter),
+                traduzirPageable(pageable));
+
         List<PedidoResumoDTO> pedidoResumoList = pedidoResumoModelAssembler.toCollectionDTO(pedidos.getContent());
         Page<PedidoResumoDTO> pedidoResumoPage = new PageImpl<>(pedidoResumoList,pageable,
                 pedidos.getTotalElements());
@@ -76,6 +81,17 @@ public class PedidoController {
             throw new NegocioException(e.getMessage(),e);
         }
 
+    }
+    private Pageable traduzirPageable(Pageable apiPageable){
+        var mapping = Map.of(
+                "codigo","codigo",
+                "restaurante.nome", "restaurante.nome",
+                "cliente.nome","cliente.nome",
+                    "subTotal","subtotal",
+                    "taxaFrete","TaxaFrete",
+                    "valorTotal","valorTotal");
+
+        return PageableTranslator.translate(apiPageable,mapping);
     }
 }
 
