@@ -95,7 +95,7 @@ insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pag_id
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
 	                status, data_criacao, subtotal, taxa_frete, valor_total)
 values (3, "2acdda8a-be91-48b7-8f72-64a1486417b3", 1, 2, 2, 2, '38400-000', 'rua 1', '500', 'Apto 801', 'Brasil',
-        'CRIADO', utc_timestamp, 298.90, 10, 308.90);
+        'ENTREGUE', utc_timestamp, 298.90, 10, 308.90);
 
 insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values ( 3, 1, 1, 78.9, 78.9, "vrum vrum");
@@ -107,7 +107,7 @@ insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pag_id
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
 	                status, data_criacao, subtotal, taxa_frete, valor_total)
 values (4, "2acdda8a-be91-48b7-8f72-64a1486417b4", 1, 2, 2, 2, '38400-000', 'rua 1', '500', 'Apto 801', 'Brasil',
-        'CRIADO', utc_timestamp, 298.90, 10, 308.90);
+        'CONFIRMADO', utc_timestamp, 298.90, 10, 308.90);
 
 insert into item_pedido ( pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values ( 4, 1, 1, 78.9, 78.9, "Ran DAn dan");
