@@ -26,7 +26,7 @@ public class VendaQueryServiceImpl implements VendaQueryService {
         var predicates = new ArrayList<Predicate>();
 
         var  functionConvertTzDateDataCriacao = builder.function("convert_tz",
-                Date.class, root.get("DataCriacao"),
+                Date.class, root.get("dataCriacao"),
                 builder.literal("+00:00"), builder.literal(timeOffset));
 
         var  functionDateDataCriacao = builder.function("date",
