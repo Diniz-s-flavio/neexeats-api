@@ -1,4 +1,4 @@
-package com.nxstage.neexeatsapi.infrastructure.service;
+package com.nxstage.neexeatsapi.infrastructure.service.query;
 
 import com.nxstage.neexeatsapi.domain.filter.VendaDiariaFilter;
 import com.nxstage.neexeatsapi.domain.model.Pedido;
