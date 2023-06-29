@@ -8,6 +8,7 @@ import com.nxstage.neexeatsapi.domain.exception.EntidadeEmUsoException;
 import com.nxstage.neexeatsapi.domain.exception.EntidadeNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.exception.NegocioException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -40,6 +41,19 @@ public class ApiExeptionHandler  extends ResponseEntityExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
+    @ExceptionHandler(FileUploadException.class)
+    public ResponseEntity<?> fileUploadException(FileUploadException ex, WebRequest request) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
+        String detail = "Erro ao realizar o upload, o corpo da requisição pode estar inválido.";
+
+        Problem problem = createProblemBuilder(status, problemType, detail)
+                .userMessage(MSG_ERRO_GENERICO_USERMASSAGE)
+                .build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable
             (HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
