@@ -7,30 +7,30 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import javax.validation.Valid;
 import java.nio.file.Path;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
-public class RestauranteProfutoFotoController {
+public class RestauranteProdutoFotoController {
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void updatePhoto(@PathVariable Long restauranteId,
-                            @PathVariable Long produtoId, FotoProdutoInputDTO photoInputDTO){
+                            @PathVariable Long produtoId, @Valid FotoProdutoInputDTO fotoProdutoInputDTO){
         String filePath = "C:\\Users\\ajayf\\Desktop\\Dotz\\Alpha\\03 - Estudos\\Estudo Java\\SpringBoot\\neexeats-api\\src\\main\\resources\\testes-img";
 
         var fileName = UUID.randomUUID().toString()
-                + "_" + photoInputDTO.getArquivo().getOriginalFilename();
+                + "_" + fotoProdutoInputDTO.getArquivo().getOriginalFilename();
 
         var filePhoto = Path.of(filePath,fileName);
 
-        System.out.println(photoInputDTO.getDescricao());
+        System.out.println(fotoProdutoInputDTO.getDescricao());
         System.out.println(filePhoto);
-        System.out.println(photoInputDTO.getArquivo().getContentType());
+        System.out.println(fotoProdutoInputDTO.getArquivo().getContentType());
 
         try {
-            photoInputDTO.getArquivo().transferTo(filePhoto);
-        } catch (IOException e) {
+            fotoProdutoInputDTO.getArquivo().transferTo(filePhoto);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
