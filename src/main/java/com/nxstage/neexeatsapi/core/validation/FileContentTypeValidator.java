@@ -16,9 +16,7 @@ public class FileContentTypeValidator implements ConstraintValidator<FileContent
     @Override
     public boolean isValid(MultipartFile value, ConstraintValidatorContext constraintValidatorContext) {
        boolean valid = false;
-        System.out.println("Multpart: " + value.getContentType());
         for (String allow : this.allows) {
-            System.out.println("allow value: "+ allow);
             if (allow.equals(value.getContentType())){
                 valid = true;
                 break;
