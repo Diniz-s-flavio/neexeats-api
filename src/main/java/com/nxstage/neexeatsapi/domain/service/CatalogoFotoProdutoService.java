@@ -27,9 +27,11 @@ public class CatalogoFotoProdutoService {
         String nameNewFile = fotoStorage.generateFileName(photo.getNomeArquivo());
 
         Optional<FotoProduto>  existingPhoto = produtoRepository.findPhotoById(restauranteId,produtoId);
+        String oldFileName = null;
 
         if (existingPhoto.isPresent()){
             produtoRepository.delete(existingPhoto.get());
+            oldFileName = existingPhoto.get().getNomeArquivo();
         }
 
         photo.setNomeArquivo(nameNewFile);
@@ -41,7 +43,7 @@ public class CatalogoFotoProdutoService {
                 .inputStream(fileData)
                 .build();
 
-        fotoStorage.storage(newPhoto);
+        fotoStorage.replace(oldFileName, newPhoto);
 
         return photo;
     }
