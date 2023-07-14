@@ -1,4 +1,4 @@
-package com.nxstage.neexeatsapi.domain.repository;
+package com.nxstage.neexeatsapi.domain.service;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.UUID;
 
 public interface FotoStorageService {
+    InputStream recover(String fileName);
     void storage(NovaFoto newPhoto);
     void remove(String fileName);
     default void replace(String oldFileName, NovaFoto newPhoto){

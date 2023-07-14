@@ -1,8 +1,8 @@
 package com.nxstage.neexeatsapi.domain.service;
 
+import com.nxstage.neexeatsapi.domain.exception.FotoProdutoNaoEncontradaException;
 import com.nxstage.neexeatsapi.domain.model.FotoProduto;
-import com.nxstage.neexeatsapi.domain.repository.FotoStorageService;
-import com.nxstage.neexeatsapi.domain.repository.FotoStorageService.NovaFoto;
+import com.nxstage.neexeatsapi.domain.service.FotoStorageService.NovaFoto;
 import com.nxstage.neexeatsapi.domain.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,11 @@ public class CatalogoFotoProdutoService {
 
     @Autowired
     private FotoStorageService fotoStorage;
+
+    public FotoProduto buscarOuFalhar(Long restauranteId, Long produtoId){
+        return produtoRepository.findPhotoById(restauranteId, produtoId)
+                .orElseThrow(()-> new FotoProdutoNaoEncontradaException(restauranteId, produtoId));
+    }
 
     @Transactional
     public FotoProduto salvar(FotoProduto photo, InputStream fileData){
