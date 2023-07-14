@@ -52,4 +52,9 @@ public class CatalogoFotoProdutoService {
 
         return photo;
     }
+
+    @Transactional
+    public void delete(FotoProduto photo){
+        produtoRepository.delete(photo);
+    }
 }

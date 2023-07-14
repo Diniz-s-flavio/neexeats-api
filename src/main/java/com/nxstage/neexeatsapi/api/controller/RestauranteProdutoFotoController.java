@@ -11,6 +11,7 @@ import com.nxstage.neexeatsapi.domain.service.CatalogoFotoProdutoService;
 import com.nxstage.neexeatsapi.domain.service.FotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -58,7 +59,7 @@ public class RestauranteProdutoFotoController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public FotoProdutoDTO findByprodutoId(@PathVariable Long restauranteId,
+    public FotoProdutoDTO findByProdutoId(@PathVariable Long restauranteId,
                                           @PathVariable Long produtoId){
         FotoProduto foundPhoto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
 
@@ -98,5 +99,16 @@ public class RestauranteProdutoFotoController {
         if (!compatible){
             throw new HttpMediaTypeNotAcceptableException(acceptMediaTypes);
         }
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePhoto(@PathVariable Long restauranteId,
+                            @PathVariable Long produtoId){
+        FotoProduto foundPhoto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
+
+        fotoStorage.remove(foundPhoto.getNomeArquivo());
+
+        catalogoFotoProduto.delete(foundPhoto);
     }
 }
