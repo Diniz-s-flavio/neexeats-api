@@ -9,11 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class FluxoPedidoService {
     @Autowired
     private EmissaoPerdidoService emissaoPerdido;
+    @Autowired
+    private EnvioEmailService envioEmail;
     @Transactional
     public void confirmar(String pedidoCode){
         Pedido pedido = emissaoPerdido.buscarOuFalhar(pedidoCode);
 
         pedido.confirmar();
+        var message = EnvioEmailService.Mensagem.builder()
+                .assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
+                .variavel("pedido",pedido)
+                .corpo("pedido-confirmado.html")
+                .destinatario(pedido.getCliente().getEmail()).build();
+
+        envioEmail.send(message);
     }
     @Transactional
     public void cancelar(String pedidoCode){

@@ -13,7 +13,7 @@ import java.nio.file.Path;
 @Service
 public class LocalFotoStorageService implements FotoStorageService {
 
-    @Value("${nxstage.storage.local.photo-directory}")
+    @Value("${neexeat.storage.local.photo-directory}")
     private Path photosDirectory;
 
     @Override
