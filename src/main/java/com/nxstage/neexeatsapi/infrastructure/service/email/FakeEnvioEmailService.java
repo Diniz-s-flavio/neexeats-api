@@ -5,6 +5,7 @@ import com.nxstage.neexeatsapi.domain.service.EnvioEmailService;
 import com.nxstage.neexeatsapi.infrastructure.exception.EmailException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -12,8 +13,8 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.mail.internet.MimeMessage;
 
-
-public class SmtpEnvioEmailService implements EnvioEmailService {
+@Slf4j
+public class FakeEnvioEmailService implements EnvioEmailService {
     @Autowired
     private JavaMailSender mailSender;
 
@@ -22,7 +23,7 @@ public class SmtpEnvioEmailService implements EnvioEmailService {
     @Autowired
     private Configuration freemakerConfig;
     @Override
-    public void send(Mensagem message) {
+    public void send(Mensagem message) {;
         try {
             String mailBody = templateProcessor(message);
             MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -33,9 +34,9 @@ public class SmtpEnvioEmailService implements EnvioEmailService {
             helper.setSubject(message.getAssunto());
             helper.setText(mailBody,true);
 
-            System.out.println("Helper From email=" + mimeMessage.getFrom());
-
-            mailSender.send(mimeMessage);
+            System.out.println("Email Fake enviado");
+            System.out.println("From email=" + mimeMessage.getFrom());
+            log.info(mailBody);
         } catch (Exception e) {
             throw new EmailException("Não Foi Possível enviar o E-mail",e);
         }
