@@ -1,10 +1,13 @@
 package com.nxstage.neexeatsapi.domain.model;
 
+import com.nxstage.neexeatsapi.domain.event.PedidoCanceladoEvent;
+import com.nxstage.neexeatsapi.domain.event.PedidoConfirmadoEvent;
 import com.nxstage.neexeatsapi.domain.exception.NegocioException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,8 +19,8 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Pedido {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public class Pedido extends AbstractAggregateRoot<Pedido> {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,10 +69,14 @@ public class Pedido {
     public void confirmar(){
         setStatus(StatusPedido.CONFIRMADO);
         setDataConfirmacao(OffsetDateTime.now());
+
+        registerEvent(new PedidoConfirmadoEvent(this));
     }
     public void cancelar(){
         setStatus(StatusPedido.CANCELADO);
         setDataConfirmacao(OffsetDateTime.now());
+
+        registerEvent(new PedidoCanceladoEvent(this));
     }
     public void enviar(){
         setStatus(StatusPedido.ENTREGUE);
