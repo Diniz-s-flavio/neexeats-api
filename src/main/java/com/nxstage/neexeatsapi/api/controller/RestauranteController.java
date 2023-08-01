@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/restaurantes")
 public class RestauranteController {
@@ -36,17 +36,18 @@ public class RestauranteController {
     @Autowired
     private RestauranteInputDisassembler restauranteInputDisassembler;
 
+
     @GetMapping()
     @JsonView(RestauranteView.Resumo.class)
     public List<RestauranteDTO> restauranteList(){
         return restauranteModelAssembler.toCollectionDTO(
                 restauranteRepository.findAll());
     }
-    @GetMapping(params = "projecao=apenas-nome")
-    @JsonView(RestauranteView.ApenasNome.class)
-    public List<RestauranteDTO> restauranteNomeList(){
-        return restauranteList();
-    }
+    //@GetMapping(params = "projecao=apenas-nome")
+    //@JsonView(RestauranteView.ApenasNome.class)
+    //public List<RestauranteDTO> restauranteNomeList(){
+    //    return restauranteList();
+    //}
 
     @GetMapping("/{restauranteId}")
     public RestauranteDTO buscar(@PathVariable("restauranteId") Long id){
