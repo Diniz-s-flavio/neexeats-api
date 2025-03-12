@@ -27,7 +27,28 @@ a configuração de Internacionalização.
 - **Gestão de Pedidos:** Crie, atualize, consulte e exclua pedidos, incluindo informações sobre os produtos comprados e quantidades.
 
 ## Configuração do Ambiente
+### Requisitos Pré-Requisitos
 
+- Java 11 ou superior
+- MySQL 8
+- Maven
+
+### Configuração do Banco de Dados
+1. Certifique-se de que o MySQL esteja instalado e rodando.
+
+2. Crie um banco de dados chamado `neexeat`:
+   ```sql
+   CREATE DATABASE neexeat;
+   ```
+   
+3. Atualize o arquivo `application.properties` ou `application.yml` com as credenciais do seu banco de dados:
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/neexeat
+   spring.datasource.username=seu_usuario
+   spring.datasource.password=sua_senha
+   spring.jpa.hibernate.ddl-auto=update
+   ```
+   
 1. **Clone o repositório:**
 
    ```bash
